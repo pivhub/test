@@ -1,33 +1,16 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: hello-kubernetes
-  namespace: spinnaker
-spec:
-  type: ClusterIP
-  ports:
-  - port: 80
-    targetPort: 8080
-  selector:
-    app: hello-kubernetes
----
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hello-kubernetes
-  namespace: spinnaker
+ name: example-ingress
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: hello-kubernetes
-  template:
-    metadata:
-      labels:
-        app: hello-kubernetes
-    spec:
-      containers:
-      - name: hello-kubernetes
-        image: paulbouwer/hello-kubernetes:1.5
-        ports:
-        - containerPort: 8080
+ replicas: 2
+ template:
+   metadata:
+     labels:
+       app: example-ingress
+   spec:
+     containers:
+     - name: example-ingress
+       image: paulbouwer/hello-kubernetes:1.5
+       ports:
+       - containerPort: 8080
